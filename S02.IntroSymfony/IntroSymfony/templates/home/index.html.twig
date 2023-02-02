@@ -1,7 +1,17 @@
 {% extends 'core/base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }} ...{% endblock %}
+{% block title %} Champions {% endblock %}
 
 {% block content %}
-    <h1>Yannick</h1>
+    <h1 class="mt-4">Champions</h1>
+    <div class="row">
+
+        {% for champion in champions %}
+        <div class="col-2 card mx-2 my-2">
+            <div class="card-body">
+                <h5 class="card-title text-center">{{ champion.name }}</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

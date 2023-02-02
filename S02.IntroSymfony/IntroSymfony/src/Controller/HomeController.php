@@ -2,27 +2,45 @@
 
 namespace App\Controller;
 
+use App\Entity\Champion;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+
+    private $em = null;
+
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        //$entityManager = $doctrine->getManager(); 
+        //! DANGER Ligne importante pour les fonctions utilitaires
+        $this->em = $doctrine->getManager();
 
-        $dictionary = [];
-        $dictionary['controller_name'] = 'HomeController';
-        $dictionary['my_name'] = 'Yannick Charron';
+        //$champions = $this->retrieveAllChampions($entityManager);
+       
+        $champions = $this->retrieveAllChampions();
 
-        // return $this->render('home/index.html.twig', [
-        //     'controller_name' => 'HomeController',
-        //     'my_name' => 'Yannick Charron'
-        // ]);
+        //Pour déboguer des fois
+        //var_dump($champions);
 
-        return $this->render('home/index.html.twig', $dictionary);
+        return $this->render('home/index.html.twig', ['champions' => $champions]);
     }
+
+    private function retrieveAllChampions() {
+
+        return $this->em->getRepository(Champion::class)->findAll();
+        
+    }
+
+    // private function retrieveAllChampions($entityManager) {
+
+    //     return $entityManager->getRepository(Champion::class)->findAll();
+        
+    // }
 
     // /yannick
     #[Route('/yannick', name:'yannick.route')]
