@@ -1,0 +1,27 @@
+//Création d'un projet symfony
+symfony new <ProjectName> --webapp
+
+// Télécharge les dépendances du projet équivalent à npm install en node.js
+// Si vous n'avez pas les dossiers vendor et var
+composer install
+
+// Création de la base de données 
+symfony console doctrine:database:create
+
+// Création du schema (tables), attention supprimer les tables. Les données sont perdues.
+symfony console doctrine:schema:create
+
+// Mise à jour du schéma de la base de données
+symfony console doctrine:schema:update --force
+
+//Créer un controller (2 fichiers .php et .twig)
+symfony console make:controller <ControllerName>
+
+//Créer une entité
+symfony console make:entity <EntityName>
+
+
+
+//Démarrer le serveur de développement
+symfony server:start
+

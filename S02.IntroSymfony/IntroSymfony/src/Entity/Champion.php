@@ -17,6 +17,16 @@ class Champion
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
+    #[ORM\Column(length:50)]
+    private ?string $title = null;
+
+    #[ORM\Column(length:1024)]
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(targetEntity:Role::class, inversedBy:"champions", cascade:["persist"])]
+    #[ORM\JoinColumn(name:'idMainRole', referencedColumnName:'idRole')]
+    private $mainRole;
+
     public function getIdChampion(): ?int
     {
         return $this->idChampion;
@@ -32,5 +42,20 @@ class Champion
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function getMainRole(): ?Role
+    {
+        return $this->mainRole;
     }
 }
