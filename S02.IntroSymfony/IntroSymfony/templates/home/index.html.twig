@@ -1,17 +1,38 @@
 {% extends 'core/base.html.twig' %}
 
-{% block title %} Champions {% endblock %}
+{% block title %} Champions  {% endblock %}
 
 {% block content %}
-    <h1 class="mt-4">Champions</h1>
+    <h1 class="mt-4">Champions - ({{ champions | length }}) </h1>
     <div class="row">
-
-        {% for champion in champions %}
-        <div class="col-2 card mx-2 my-2">
-            <div class="card-body">
-                <h5 class="card-title text-center">{{ champion.name }}</h5>
+        <div class="col-2">
+            {# Afficher les 5 rôles #}
+            <ul>
+                {% for role in roles %} 
+                    <li><a href="{{ path('app_home', { role: role.idRole }) }}">{{ role.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                {% for champion in champions %}
+                    <div class="col-2 card mx-2 my-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ champion.name }}</h5>
+                            <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion">
+                            {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/champions.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+	<script src=""></script>
 {% endblock %}

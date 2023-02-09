@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Champion;
+use App\Entity\Role;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -14,23 +16,37 @@ class HomeController extends AbstractController
     private $em = null;
 
     #[Route('/', name: 'app_home')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         //$entityManager = $doctrine->getManager(); 
         //! DANGER Ligne importante pour les fonctions utilitaires
         $this->em = $doctrine->getManager();
 
+        $role = $request->query->get('role');
+
         //$champions = $this->retrieveAllChampions($entityManager);
        
-        $champions = $this->retrieveAllChampions();
+        $champions = $this->retrieveChampionFromRole($role);
+        $roles = $this->retrieveAllRoles();
 
         //Pour déboguer des fois
         //var_dump($champions);
 
-        return $this->render('home/index.html.twig', ['champions' => $champions]);
+        return $this->render('home/index.html.twig', ['champions' => $champions, 'roles' => $roles]);
     }
 
-    private function retrieveAllChampions() {
+    private function retrieveChampionFromRole($role) {
+        return $this->em->getRepository(Role::class)->find($role)->getChampions();
+    }
+
+    private function retrieveAllRoles() 
+    {
+        //SQL -> SELECT * FROM roles
+        return $this->em->getRepository(Role::class)->findAll();
+    }
+
+    private function retrieveAllChampions() 
+    {
 
         return $this->em->getRepository(Champion::class)->findAll();
         
