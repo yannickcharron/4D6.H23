@@ -43,6 +43,20 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', ['champions' => $champions, 'roles' => $roles]);
     }
+
+
+    #[Route('/champions/{idChampion}', name:'champion_modal')]
+    public function infoChampion($idChampion, Request $request, ManagerRegistry $doctrine): Response {
+        //2 Philosophies -> JSON, HTML
+
+        $this->em = $doctrine->getManager();
+
+        $champion = $this->em->getRepository(Champion::class)->find($idChampion);
+
+        return $this->render('home/champion.modal.twig', ['champion' => $champion]);
+
+    }
+
     
     private function retrieveChampions($role, $searchField) {
         return $this->em->getRepository(Champion::class)->findWithCriteria($role, $searchField);

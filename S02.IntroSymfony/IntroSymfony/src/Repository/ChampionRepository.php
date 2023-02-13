@@ -49,7 +49,7 @@ class ChampionRepository extends ServiceEntityRepository
         }
 
         if($role != null) {
-            $queryBuilder->andWhere('c.idMainRole = :mainRole')
+            $queryBuilder->andWhere('c.mainRole = :mainRole')
                 ->setParameter('mainRole', $role);
         }
         

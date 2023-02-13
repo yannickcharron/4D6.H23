@@ -28,7 +28,7 @@
                     {% for champion in champions %}
                         <div class="col-2 card mx-2 my-2">
                             <div class="card-body">
-                                <h5 class="card-title text-center">{{ champion.name }}</h5>
+                                <a class="champion-modal" href="{{ path('champion_modal', { idChampion: champion.idChampion })}}"><h5 class="card-title text-center">{{ champion.name }}</h5></a>
                                 <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion">
                                 {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
                             </div>
@@ -40,6 +40,13 @@
             </div>
         </div>
     </div>
+    <div class="modal" tabindex="-1" id="champion-modal">
+        <div class="modal-dialog">
+            <div id="champion-modal-content" class="modal-content">
+                
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -47,5 +54,5 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src=""></script>
+	<script src="{{ asset('scripts/modal.champion.js') }}"></script>
 {% endblock %}
