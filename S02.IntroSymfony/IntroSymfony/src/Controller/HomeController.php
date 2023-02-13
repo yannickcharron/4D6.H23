@@ -22,17 +22,30 @@ class HomeController extends AbstractController
         //! DANGER Ligne importante pour les fonctions utilitaires
         $this->em = $doctrine->getManager();
 
-        $role = $request->query->get('role');
+        $role = $request->query->get('role'); // $_GET['role']
+        $searchField = $request->request->get('search_field'); // $_POST['search_field']
+
+        $roles = $this->retrieveAllRoles();
 
         //$champions = $this->retrieveAllChampions($entityManager);
        
-        $champions = $this->retrieveChampionFromRole($role);
-        $roles = $this->retrieveAllRoles();
+        // if($role != null) {
+        //     $champions = $this->retrieveChampionFromRole($role);
+        // } else {
+        //     $champions = $this->retrieveAllChampions();
+        // }
+        
+        $champions = $this->retrieveChampions($role, $searchField);
+        
 
         //Pour déboguer des fois
         //var_dump($champions);
 
         return $this->render('home/index.html.twig', ['champions' => $champions, 'roles' => $roles]);
+    }
+    
+    private function retrieveChampions($role, $searchField) {
+        return $this->em->getRepository(Champion::class)->findWithCriteria($role, $searchField);
     }
 
     private function retrieveChampionFromRole($role) {

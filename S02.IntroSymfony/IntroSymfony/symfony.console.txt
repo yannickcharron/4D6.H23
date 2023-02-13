@@ -20,8 +20,12 @@ symfony console make:controller <ControllerName>
 //Créer une entité
 symfony console make:entity <EntityName>
 
-
-
 //Démarrer le serveur de développement
 symfony server:start
+
+//Vider la cache de symfony
+symfony console cache:clear
+
+//Warmup la cache
+symfony console cache:warmup
 

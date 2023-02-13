@@ -26,6 +26,9 @@ class Champion
     #[ORM\Column(name:'imagePath', length:255)]
     private ?string $imagePath = null;
 
+    #[ORM\Column('idMainRole')]
+    private ?int $idMainRole = null;
+
     #[ORM\ManyToOne(targetEntity:Role::class, inversedBy:"champions", cascade:["persist"])]
     #[ORM\JoinColumn(name:'idMainRole', referencedColumnName:'idRole')]
     private $mainRole;

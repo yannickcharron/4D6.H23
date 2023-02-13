@@ -8,22 +8,35 @@
         <div class="col-2">
             {# Afficher les 5 rôles #}
             <ul>
+                <li><a href="{{ path('app_home') }}">Tous les rôles</a></li>
                 {% for role in roles %} 
                     <li><a href="{{ path('app_home', { role: role.idRole }) }}">{{ role.name }}</a></li>
                 {% endfor %}
             </ul>
+
+            {# Lien complet avec le DNS #}
+            {{ app.request.uri }} <br /> 
+            {# Path sans GET (?) #}
+            {{ app.request.pathinfo }} <br /> 
+            {# Path avec GET #}
+            {{ app.request.requesturi }} <br /> 
+
         </div>
         <div class="col-10">
             <div class="row">
-                {% for champion in champions %}
-                    <div class="col-2 card mx-2 my-2">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ champion.name }}</h5>
-                            <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion">
-                            {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
+                {% if champions|length > 0 %}
+                    {% for champion in champions %}
+                        <div class="col-2 card mx-2 my-2">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ champion.name }}</h5>
+                                <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion">
+                                {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun champion avec ce rôle.</p>
+                {% endif %}
             </div>
         </div>
     </div>

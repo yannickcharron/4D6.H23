@@ -39,6 +39,24 @@ class ChampionRepository extends ServiceEntityRepository
         }
     }
 
+    public function findWithCriteria($role, $searchField) {
+        $queryBuilder = $this->createQueryBuilder('c'); //SELECT * FROM champions c
+
+        if($searchField != null) {
+            $queryBuilder->andWhere('c.name LIKE :searchFilter') // WHERE c.name LIKE %{searchField}%
+                ->orWhere('c.description LIKE :searchFilter') // OR c.description LIKE %{searchField}%
+                ->setParameter('searchFilter', '%'.$searchField.'%'); 
+        }
+
+        if($role != null) {
+            $queryBuilder->andWhere('c.idMainRole = :mainRole')
+                ->setParameter('mainRole', $role);
+        }
+        
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Champion[] Returns an array of Champion objects
 //     */
