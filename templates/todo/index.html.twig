@@ -1,0 +1,50 @@
+{% extends 'core/base.html.twig' %}
+{% block content %}
+<section>
+	<div class="container py-5 h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col">
+				<div id="todos-list" class="card">
+					<div class="card-body py-4 px-4 px-md-5">
+						<p class="h1 text-center mt-3 mb-4 pb-3">
+							<i class="fas fa-check-square me-1"></i>
+							<u>Tâches de {{ name }}</u>
+						</p>
+
+						<div class="pb-2">
+							<div class="card">
+								<div class="card-body">
+                                    <form method="POST" action="{{ path('todo_add') }}">
+                                        <input name="txtTodoName" type="text" class="form-control mx-3" placeholder="Nouvelle tâche..." required>
+                                        <select name="cboTodoPriority" class="form-select">
+                                            <option value="low">Basse</option>
+                                            <option selected value="medium">Moyenne</option>
+                                            <option value="high">Élevée</option>
+                                        </select>
+                                        <input name="clpTodoColor" type="color" class="form-control form-control-color mx-3" value="#563D7C">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </form>
+                                </div>
+							</div>
+						</div>
+
+						<hr class="my-4">
+                        <ul class="list-group list-group-horizontal rounded-0 bg-transparent">
+                            <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                            </li>
+                            <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                                <div class="d-flex flex-row justify-content-end mb-1">
+                                </div>
+                                <div class="text-end text-muted">
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="d-flex flex-row justify-content-md-center my-2">
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
