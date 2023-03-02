@@ -25,6 +25,7 @@ class TodoList {
             $todoPriorities = $newTodos["cboPriority"];
             $todoColors = $newTodos["clpColor"];
     
+            //FIXME: change to $key foreach
             for($i = 0; $i < count($this->todos); $i++) {
                 $newName = $todoNames[$i];
                 $newPriority = $todoPriorities[$i];
