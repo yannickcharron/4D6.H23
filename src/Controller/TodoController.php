@@ -39,11 +39,29 @@ class TodoController extends AbstractController
     }
 
     #[Route('/todo/update', name:'todo_update', methods:['POST'])]
-    public function updateTodo(Request $request) {
+    public function updateTodo(Request $request) : Response {
         $post = $request->request->all();
+        $this->initSession($request);
 
-        var_dump($post);
+        $action = $request->request->get('action');
+
+        if($action == "update") {
+            $this->todoList->update($post);
+        } else if($action == "empty") {
+            $session = $request->getSession();
+            $session->remove('todolist');
+        }
+
         
+        return $this->redirectToRoute('app_todo');
+    }
+
+    #[Route('/todo/delete/{index}', name:'todo_delete')]
+    public function deleteTodo($index, Request $request) : Response {
+        $this->initSession($request);
+
+        $this->todoList->delete($index);
+
         return $this->redirectToRoute('app_todo');
     }
 
@@ -57,8 +75,6 @@ class TodoController extends AbstractController
 
         $session->set('name', 'Yannick');
         $this->todoList = $session->get('todolist', new TodoList());
-
-
 
         $session->set('todolist', $this->todoList);
 

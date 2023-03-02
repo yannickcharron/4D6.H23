@@ -20,6 +20,7 @@ class Todo {
         $this->name = $name;
         $this->priority = $priority;
         $this->color = $color;
+        $this->modifyDate = time();
     }
 
     public function getName() {
