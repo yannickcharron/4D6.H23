@@ -11,5 +11,8 @@ class TodoList {
         $this->todos[] = $todo;
     }
 
+    public function getTodos() {
+        return $this->todos;
+    }
 
 }

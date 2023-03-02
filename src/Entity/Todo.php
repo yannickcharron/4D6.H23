@@ -22,5 +22,17 @@ class Todo {
         $this->color = $color;
     }
 
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getPriority() {
+        return $this->priority;
+    }
+
+    public function getColor() {
+        return $this->color;
+    }
+
 
 }

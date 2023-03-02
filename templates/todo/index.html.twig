@@ -15,6 +15,7 @@
 							<div class="card">
 								<div class="card-body">
                                     <form method="POST" action="{{ path('todo_add') }}">
+                                    <div class="d-flex flex-row align-items-center">
                                         <input name="txtTodoName" type="text" class="form-control mx-3" placeholder="Nouvelle tâche..." required>
                                         <select name="cboTodoPriority" class="form-select">
                                             <option value="low">Basse</option>
@@ -23,14 +24,24 @@
                                         </select>
                                         <input name="clpTodoColor" type="color" class="form-control form-control-color mx-3" value="#563D7C">
                                         <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
                                     </form>
                                 </div>
 							</div>
 						</div>
 
 						<hr class="my-4">
+                        <form action="{{ path('todo_update') }}" method="POST">
+                        {% for todo in todolist.todos %}
                         <ul class="list-group list-group-horizontal rounded-0 bg-transparent">
                             <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                                <input name="{{ 'txtTodo[' ~ loop.index0 ~ ']' }}" value="{{ todo.name }}" type="text" class="form-control mx-3" placeholder="Nouvelle tâche..." required>
+                                <select name="{{ 'cboPriority[' ~ loop.index0 ~ ']' }}" class="form-select">
+                                    <option {% if todo.priority == "low" %} selected {% endif %} value="low">Basse</option>
+                                    <option {% if todo.priority == "medium" %} selected {% endif %} value="medium">Moyenne</option>
+                                    <option {% if todo.priority == "high" %} selected {% endif %} value="high">Élevée</option>
+                                </select>
+                                <input name="{{ 'clpColor[' ~ loop.index0 ~ ']' }}" type="color" class="form-control form-control-color mx-3" value="{{ todo.color }}">
                             </li>
                             <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
                                 <div class="d-flex flex-row justify-content-end mb-1">
@@ -39,8 +50,11 @@
                                 </div>
                             </li>
                         </ul>
+                        {% endfor %}
                         <div class="d-flex flex-row justify-content-md-center my-2">
+                            <button type="submit" class="btn btn-success col-4 mx-3">Mettre à jour</button>
                         </div>
+                        </form>
 					</div>
 				</div>
 			</div>

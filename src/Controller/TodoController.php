@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TodoList;
+use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,8 @@ class TodoController extends AbstractController
         $session = $request->getSession();
 
         return $this->render('todo/index.html.twig', [
-            'name' => $session->get('name')
+            'name' => $session->get('name'),
+            'todolist' => $this->todoList
         ]);
     }
     #[Route('/todo/add', name:'todo_add', methods:['POST'])]
@@ -36,6 +38,15 @@ class TodoController extends AbstractController
 
     }
 
+    #[Route('/todo/update', name:'todo_update', methods:['POST'])]
+    public function updateTodo(Request $request) {
+        $post = $request->request->all();
+
+        var_dump($post);
+        
+        return $this->redirectToRoute('app_todo');
+    }
+
     private function initSession(Request $request) {
 
         $session = $request->getSession();
@@ -45,8 +56,10 @@ class TodoController extends AbstractController
         //$this->todoList = $session->get('todolist');
 
         $session->set('name', 'Yannick');
-
         $this->todoList = $session->get('todolist', new TodoList());
+
+
+
         $session->set('todolist', $this->todoList);
 
 
