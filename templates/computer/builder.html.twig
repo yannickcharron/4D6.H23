@@ -1,0 +1,9 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme computer_form 'bootstrap_5_layout.html.twig' %}
+
+{% block content %}
+    <h1 class="mt-5">Ordinateur</h1>
+    <div class="row">
+        {{ form(computer_form) }}
+    </div>
+{% endblock %}
