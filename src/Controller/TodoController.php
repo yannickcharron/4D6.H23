@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\TodoList;
+use App\Core\Notification;
+use App\Core\NotificationColor;
 use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +34,14 @@ class TodoController extends AbstractController
         $post = $request->request->all();
         
         //TODO : Validation
-        $this->todoList->add($post['txtTodoName'], $post['cboTodoPriority'], $post['clpTodoColor']);
+        if($post['txtTodoName']) {
+            $this->todoList->add($post['txtTodoName'], $post['cboTodoPriority'], $post['clpTodoColor']);
+            $this->addFlash('todo', 
+                new Notification('success', 'Tâche ajoutée avec succès', NotificationColor::SUCCESS)); //$request->getSession()->getFlashBag()->add();
+        } else {
+            $this->addFlash('todo', 
+                new Notification('error', 'Le titre de la tâche doit être fourni', NotificationColor::WARNING));
+        }
 
         return $this->redirectToRoute('app_todo');
 
@@ -47,6 +56,8 @@ class TodoController extends AbstractController
 
         if($action == "update") {
             $this->todoList->update($post);
+            $this->addFlash('todo', 
+                new Notification('success', 'Tâches sauvegardées', NotificationColor::INFO));
         } else if($action == "empty") {
             $session = $request->getSession();
             $session->remove('todolist');

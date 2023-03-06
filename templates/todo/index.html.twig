@@ -8,8 +8,12 @@
 					<div class="card-body py-4 px-4 px-md-5">
 						<p class="h1 text-center mt-3 mb-4 pb-3">
 							<i class="fas fa-check-square me-1"></i>
-							<u>Tâches de {{ name }}</u>
+							<u>Tâches de {{ name }} - ({{ app.session.get('todolist').todos | length }})</u>
 						</p>
+
+                        {% for flash in app.flashes('todo') %}
+                            <div class="alert {{ flash.color }}">{{ flash.content }}</div>
+                        {% endfor %}
 
 						<div class="pb-2">
 							<div class="card">
@@ -45,7 +49,7 @@
                             </li>
                             <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
                                 <div class="d-flex flex-row justify-content-end mb-1">
-                                    <a href="{{ path('todo_delete', { index: key }) }}" class="text-danger">Supprimer</a>
+                                    <a href="{{ path('todo_delete', { index: key }) }}" class="text-danger"><i class="fa-solid fa-dumpster"></i></i></a>
                                 </div>
                                 <div class="text-end text-muted">
                                 </div>
@@ -53,8 +57,8 @@
                         </ul>
                         {% endfor %}
                         <div class="d-flex flex-row justify-content-md-center my-2">
-                            <button name="action" value="update" type="submit" class="btn btn-success col-4 mx-3">Mettre à jour</button>
-                            <button name="action" value="empty" type="submit" class="btn btn-danger col-4 mx-3">Vider la liste de tâche</button>
+                            <button name="action" value="update" type="submit" class="btn btn-success col-4 mx-3"><i class="fas fa-arrows-rotate"></i> Mettre à jour</button>
+                            <button name="action" value="empty" type="submit" class="btn btn-danger col-4 mx-3"><i class="fas fa-trash"></i> Vider la liste de tâche</button>
                         </div>
                         </form>
 					</div>
