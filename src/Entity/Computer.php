@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ComputerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: ComputerRepository::class)]
 #[ORM\Table(name:'computers')]
 class Computer
@@ -14,6 +16,7 @@ class Computer
     #[ORM\Column('idComputer')]
     private ?int $idComputer = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(name:'buildName', length: 100)]
     private ?string $buildName = null;
 
@@ -38,6 +41,9 @@ class Computer
     #[ORM\Column('isAssembleByUs')]
     private ?bool $isAssembleByUs = null;
 
+    #[ORM\ManyToOne(targetEntity:ComputerCategory::class, cascade:["persist"])]
+    #[ORM\JoinColumn(name:"idComputerCategory", referencedColumnName:"idComputerCategory")]
+    private $category;
 
     public function getIdComputer(): ?int
     {
@@ -49,94 +55,103 @@ class Computer
         return $this->buildName;
     }
 
-    // public function setBuildName(string $buildName): self
-    // {
-    //     $this->buildName = $buildName;
+    public function setBuildName(string $buildName): self
+    {
+        $this->buildName = $buildName;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getMotherboard(): ?string
     {
         return $this->motherboard;
     }
 
-    // public function setMotherboard(string $motherboard): self
-    // {
-    //     $this->motherboard = $motherboard;
+    public function setMotherboard(string $motherboard): self
+    {
+        $this->motherboard = $motherboard;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getCpu(): ?string
     {
         return $this->cpu;
     }
 
-    // public function setCpu(string $cpu): self
-    // {
-    //     $this->cpu = $cpu;
+    public function setCpu(string $cpu): self
+    {
+        $this->cpu = $cpu;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getMemory(): ?int
     {
         return $this->memory;
     }
 
-    // public function setMemory(int $memory): self
-    // {
-    //     $this->memory = $memory;
+    public function setMemory(int $memory): self
+    {
+        $this->memory = $memory;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getStorage(): ?string
     {
         return $this->storage;
     }
 
-    // public function setStorage(?string $storage): self
-    // {
-    //     $this->storage = $storage;
+    public function setStorage(?string $storage): self
+    {
+        $this->storage = $storage;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getGpu(): ?string
     {
         return $this->gpu;
     }
 
-    // public function setGpu(?string $gpu): self
-    // {
-    //     $this->gpu = $gpu;
+    public function setGpu(?string $gpu): self
+    {
+        $this->gpu = $gpu;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    // public function setNotes(?string $notes): self
-    // {
-    //     $this->notes = $notes;
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function isIsAssembleByUs(): ?bool
     {
         return $this->isAssembleByUs;
     }
 
-    // public function setIsAssembleByUs(bool $isAssembleByUs): self
-    // {
-    //     $this->isAssembleByUs = $isAssembleByUs;
+    public function setIsAssembleByUs(bool $isAssembleByUs): self
+    {
+        $this->isAssembleByUs = $isAssembleByUs;
 
-    //     return $this;
-    // }
+        return $this;
+    }
+
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function setCategory(ComputerCategory $category) : self {
+        $this->category = $category;
+        return $this;
+    }
 }

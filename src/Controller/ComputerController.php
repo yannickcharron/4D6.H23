@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Computer;
 use App\Form\ComputerType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,16 +19,21 @@ class ComputerController extends AbstractController
     }
 
     #[Route('/computer/builder', name: 'app_computer_builder')]
-    public function index_builder(Request $request) : Response {
+    public function index_builder(Request $request, ManagerRegistry $doctrine) : Response {
 
         $computer = new Computer();
         $form = $this->createForm(ComputerType::class, $computer);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            //TODO: Ajouter dans la base de données
+
+            //Ajouter dans la base de données
+            $entityManager = $doctrine->getManager();
+            $entityManager->getRepository(Computer::class)->save($computer, true);
+
             //TODO: Notification
-            //TODO: Redirect
+            //Redirect
+            return $this->redirectToRoute('app_computer');
         }
 
 
