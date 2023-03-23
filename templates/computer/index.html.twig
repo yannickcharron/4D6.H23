@@ -4,9 +4,37 @@
 
     <h1 class="mt-5">Ordinateurs</h1>
     <div class="row">
+        {% for flash in app.flashes('computer') %}
+            <div class="alert {{ flash.color }}">{{ flash.content }}</div>
+        {% endfor %}
         <div class="row flex-row-reverse">
             <a class="btn btn-primary col-3" href="{{ path('app_computer_builder') }}">Nouveau</a>
         </div>
     </div>
+    <table class="table table-hover col-12">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom du système</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for computer in computers %}
+                <tr>
+                    <td>{{ computer.idComputer }}</td>
+                    <td>{{ computer.buildName }}</td>
+                    <td>{{ computer.category.categoryName }}</td>
+                    <td>
+                        <a href="{{ path('computer_update', { idComputer: computer.idComputer }) }}" class="text-primary">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
+
