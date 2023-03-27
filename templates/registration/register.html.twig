@@ -1,0 +1,60 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
+{% block content %}
+    <h1 class="mt-5">Création d'un compte</h1>
+    <div class="row">
+         <div class="col-lg-8 mx-auto">
+            <p>Si vous possèdez déjà un compte client, veuillez vous <a href="">connectez ici</a></p>
+            {% for flash in app.flashes('register')%}
+                <div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
+            {% endfor %}
+            {{ form_start(registrationForm, {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.username) }}   
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.lastName) }}   
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.firstName) }}  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.password.first) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.password.second) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.phone, {'attr': {'class': 'txtPhone'}}) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.betaKey, {'attr': {'class': 'txtBetaKey'}}) }}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ form_row(registrationForm.create) }}
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %} 
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+	<script defer src="{{ asset('js/register.js')}}"></script>
+{% endblock %}
