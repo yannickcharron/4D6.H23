@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,6 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'required' => true,
                 'label' => 'Nom d\'utilisateur',
                 'attr' => []])
             ->add('lastName', TextType::class, [
@@ -55,6 +55,18 @@ class RegistrationFormType extends AbstractType
                 'row_attr' => ['class' => 'form-button'],
                 'attr' => ['class' => 'btnCreate btn-primary']
             ]);
+
+        $builder->get('phone')->addModelTransformer(new CallbackTransformer(
+            function($phoneFromDatabase) {
+                $newPhone = substr_replace($phoneFromDatabase, "-", 3, 0);
+                return substr_replace($newPhone, "-", 7, 0);
+            }, 
+            function ($phoneFromView) {
+                return str_replace("-", "", $phoneFromView);
+            }
+        ));
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
