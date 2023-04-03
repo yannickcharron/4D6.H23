@@ -5,7 +5,7 @@
     <h1 class="mt-5">Création d'un compte</h1>
     <div class="row">
          <div class="col-lg-8 mx-auto">
-            <p>Si vous possèdez déjà un compte client, veuillez vous <a href="">connectez ici</a></p>
+            <p>Si vous possédez déjà un compte client, veuillez vous <a href="{{ path('app_login') }}">connectez ici</a></p>
             {% for flash in app.flashes('register')%}
                 <div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
             {% endfor %}

@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_computer') }}">Ordinateurs</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                </li>
             </ul>
             <form class="d-flex" method="POST" action="{{ app.request.uri }}">
                 <input name="search_field" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

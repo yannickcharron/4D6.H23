@@ -1,0 +1,26 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    <h1 class="mt-5">Connexion</h1>
+    {% if notification %}
+        <div class="alert {{ notification.color }}">{{ notification.content }}</div>
+    {% endif %}
+    <form action="{{ path('app_login') }}" method="post">
+        <div class="form-outline mb-4">
+            <label class="form-label" for="username">Nom d'utilisateur:</label>
+            <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}">
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="password">Mot de passe:</label>
+            <input class="form-control" type="password" id="password" name="_password">
+        </div>
+
+        {# If you want to control the URL the user is redirected to on success #}
+        <input type="hidden" name="_target_path" value="{{ path('app_profile') }}"> 
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button type="submit" class="btn btn-primary">Connexion</button>
+    </form>
+{% endblock %}
