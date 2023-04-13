@@ -14,13 +14,28 @@
         </div>
         <div class="col-6">
             <h3>Inventaire</h3>
+            <div id="inventory">
+                <div class="row">
+                    {% for inventory in currentUser.inventories %}
+                        <div class="col-md-4 my-2">
+                            <div class="card shadow">
+                                <img src="{{ asset(inventory.item.imagePath) }}" alt="item-icon" class="card-img-top item-icon mx-auto">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ inventory.item.name }}</h5>
+                                    <p class="card-text item-qty">{{ inventory.quantity }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 
 {% block stylesheets %} 
-    
+    <link rel="stylesheet" href="{{ asset('styles/profile.css') }}">
 {% endblock %}
 
 {% block javascripts %}

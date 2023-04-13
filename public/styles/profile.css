@@ -1,0 +1,13 @@
+.item-icon {
+    width: 128px;
+}
+
+.item-qty {
+    font-size: 18px;
+    color: mediumslateblue;
+    font-weight: bold;
+}
+
+.card-body {
+    padding-bottom: 5px;
+}
