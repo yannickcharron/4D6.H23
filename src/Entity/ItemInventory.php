@@ -42,6 +42,10 @@ class ItemInventory
         return $this;
     }
 
+    public function addItem() {
+        $this->quantity += random_int(5, 20);
+    }
+
     public function getItem(): ?Item
     {
         return $this->item;
