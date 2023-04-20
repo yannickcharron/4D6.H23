@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(name:'profilePicture')]
+    private ?string $profilePicture;
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ItemInventory::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $inventories;
 
@@ -146,7 +149,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
 
+    public function setProfilePicture(string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
 
 
     /**

@@ -1,4 +1,5 @@
 {% extends 'core/base.html.twig' %}
+{% form_theme formPicture 'bootstrap_5_layout.html.twig' %}
 
 {% block content %}
     <h1 class="mt-5">Profil</h1>
@@ -8,10 +9,17 @@
             <img src="https://ui-avatars.com/api/?name={{ currentUser.firstName }}+{{ currentUser.lastName }}&rounded=true&background=random" alt="">
             <span><a href="{{ path('app_logout') }}">Se déconnecter</a></span>
             <h5>{{ app.user.firstName }} {{ app.user.lastName }}</h5>
+            {% if app.user.profilePicture %}
+                <img src="{{ asset(app.user.profilePicture) }}" alt="" class="mx-auto d-block img-thumbnail">
+            {% endif %}
             <div>
                 {{ dump(app.user) }}
             </div>
             <a href="{{ path('stripe_checkout') }}" class="btn btn-primary col-3">Acheter des items (0,99$)</a>
+            {{ form_start(formPicture) }}
+                {{ form_row(formPicture.profilePicture) }}
+            {{ form_end(formPicture) }}
+
 
         </div>
         <div class="col-6">
