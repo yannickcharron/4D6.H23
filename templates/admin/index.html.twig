@@ -1,7 +1,45 @@
 {% extends 'core/base.html.twig' %}
+{% form_theme formItems 'bootstrap_5_layout.html.twig' %}
 
 {% block content %}
 
     <h1>Administration</h1>
 
+    <div>
+        {{ is_granted("ROLE_ADMIN") }}
+        {% if is_granted("ROLE_ADMIN") %}
+
+        {% endif %}
+    </div>
+
+    <h1 class="mt-5">Items</h1>
+    {{ form_start(formItems) }}
+        <div class="row">
+            <ul class="items"
+                data-index="{{ formItems.items|length > 0 ? formItems.items|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ form_widget(formItems.items.vars.prototype)|e('html_attr') }}"
+            >
+                {% for item in formItems.items %}
+                    <li>{{ form_row(item.name) }} {{ form_row(item.imagePath) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="form-button col-4">
+                <button type="button" class="add_item_link btn btn-info my-2" data-collection-holder-class="items">Ajouter un item</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            {{ form_row(formItems.btnSave) }}
+        </div>
+
+        {{ form_rest(formItems) }}
+    {{ form_end(formItems)}}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script defer src="{{ asset('scripts/admin.items.js') }}"></script>
 {% endblock %}
